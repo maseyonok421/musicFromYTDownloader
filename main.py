@@ -1,3 +1,4 @@
+import os
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
@@ -8,7 +9,13 @@ def getTitle ( url ):
 
 # url  = "https://example.com"
 url  = "https://youtu.be/1COE-eZo6gg?si=HZp3Ep9Zkv0WOTKb"
-print(getTitle(url))
+title = getTitle(url)
+print(title)
+print("Name of File = ", end='')
+fileName = input()
+os.system("yt-dlp.exe -t mp3 --no-warnings -q --progress -o " + fileName + ' ' + url)
+
+
 # print(url)
 # site = urlopen(url)
 # page = BeautifulSoup(site, 'html.parser')
