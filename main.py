@@ -3,17 +3,53 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 def getTitle ( url ):
-	site = urlopen(url)
-	page = BeautifulSoup(site, 'html.parser')
-	return page.find('title').string
+	site  = urlopen(url)
+	page  = BeautifulSoup(site, 'html.parser')
+	title = page.find('title').string
+	return title[:-10] #because the last 10 chars always are " - YouTube"
+
+def downloadFile ( url, fileName ):
+	os.system("yt-dlp.exe -t mp3 --no-warnings -q --progress -o " + fileName + ' ' + url)
+
+
+
+
+os.system("yt-dlp.exe -U -q")
+
+downloadInfos = []
+
+urls = open("_toDownload.txt", 'r')
+for url in urls:
+	title = getTitle(url)
+	print(title)
+	print("Name of File = ", end='')
+	fileName = input()
+	downloadInfos.append([url, fileName])
+
+urls.close()
+
+for info in downloadInfos:
+	downloadFile(info[0], info[1])
+
 
 # url  = "https://example.com"
-url  = "https://youtu.be/1COE-eZo6gg?si=HZp3Ep9Zkv0WOTKb"
-title = getTitle(url)
-print(title)
-print("Name of File = ", end='')
-fileName = input()
-os.system("yt-dlp.exe -t mp3 --no-warnings -q --progress -o " + fileName + ' ' + url)
+
+
+
+
+
+
+
+
+# url  = "https://youtu.be/1COE-eZo6gg?si=HZp3Ep9Zkv0WOTKb"
+# title = getTitle(url)
+# print(title)
+# downloadFile(url)
+
+
+
+
+
 
 
 # print(url)
